@@ -91,11 +91,13 @@ def main() -> None:
     for ev in triggered[:5]:
         print("\n" + format_setup(ev))
 
-    save_jsonl(result.setups, out / "setups.jsonl")
-    save_tradingview_csv(result.setups, out / "tradingview_signals.csv")
+    save_jsonl(result.setups, out / f"{args.symbol}_setups.jsonl")
+    save_tradingview_csv(result.setups, out / f"{args.symbol}_tradingview.csv")
     if not df.empty:
-        df.to_csv(out / "joined.csv", index=False)
-    print(f"\nexports written to {out.resolve()}")
+        df.to_csv(out / f"{args.symbol}_report.csv", index=False)
+    print(f"\nrapor: {out / (args.symbol + '_report.csv')}  |  "
+          f"sinyaller: {out / (args.symbol + '_tradingview.csv')}  |  "
+          f"tam dump: {out / (args.symbol + '_setups.jsonl')}")
 
 
 def _pandas_rule(tf: str) -> str:

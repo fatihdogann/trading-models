@@ -148,8 +148,14 @@ alert, dataset ve ML feature olarak doğrudan kullanılabilir.
 
 Üç state izlenir: `TRIGGERED`, `INVALIDATED` (nedeniyle:
 `NO_DISPLACEMENT`, `CLOSED_BELOW_SWEEP_LOW`, `RANGE_BROKEN`, ...) ve
-`EXPIRED` (entry gelmedi). Çıktılar `out/setups.jsonl`, `out/joined.csv`,
-`out/tradingview_signals.csv` olarak yazılır.
+`EXPIRED` (entry gelmedi). Rapor dosyaları sembol adıyla yazılır
+(ör. XAUUSD çalıştırmasında):
+
+| Dosya | İçerik |
+|---|---|
+| `out/XAUUSD_report.csv` | **Ana rapor** — her setup bir satır + R/MAE/MFE sonuçları; Excel/Numbers ile açılır |
+| `out/XAUUSD_tradingview.csv` | Sadece tetiklenen setup'lar: `time, model, direction, score, entry, stop, target` |
+| `out/XAUUSD_setups.jsonl` | Tam structured event dump (checklist dahil) — journal/ML dataset |
 
 ## Model spesifikasyonları
 
@@ -163,3 +169,8 @@ Divergence. Silver Bullet / Unicorn / MMBM-MMSM bilinçli olarak ayrı model
 olarak eklenmedi; mimari yeni model eklemeye uygun (yeni bir state-machine
 modeli + config yeterli). Trade/risk management detection'dan ayrı
 (`tme/outcome.py` yalnızca araştırma-grade R istatistiği üretir).
+
+---
+
+**Mehmet Fatih Doğan**
+📧 [mehmetfatihdogann5@gmail.com](mailto:mehmetfatihdogann5@gmail.com)
