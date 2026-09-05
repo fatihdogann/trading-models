@@ -1,0 +1,107 @@
+# Trading Model Engine — default configuration
+# Every value here mirrors the code defaults in tme/config.py; override any
+# subset. Thresholds are per-primitive; weights/required are per-model.
+
+atr:
+  period: 14
+
+swings:
+  left: 3
+  right: 3
+
+structure:
+  use_close_break: true
+
+liquidity:
+  equal_tol_atr: 0.15
+  max_reclaim_bars: 6
+  breakout_confirm_bars: 3
+  enable_pd: true
+  enable_pw: true
+  enable_prev_session: true
+  enable_session_extremes: false
+  allow_resweep: false
+
+displacement:
+  min_body_atr: 1.2
+  min_body_ratio: 0.60
+  strong_body_atr: 1.8
+  min_pct_rank: 85.0
+  pct_lookback: 100
+  min_close_location: 0.70
+
+fvg:
+  min_size_atr: 0.10
+  require_mid_candle_direction: false
+
+sessions:
+  timezone: "America/New_York"
+  kill_zones: ["london", "ny_am"]
+
+htf:
+  eq_band: 0.02
+
+sweep_model:
+  enabled: true
+  allow_close_through: true
+  max_depth_atr: 1.5
+  max_reclaim_to_displacement_bars: 8
+  max_displacement_to_mss_bars: 8
+  max_entry_wait_bars: 24
+  weights:
+    clean_sweep: 25
+    reclaim: 20
+    strong_displacement: 20
+    confirmed_mss: 20
+    session_context: 10
+    htf_alignment: 5
+  required: ["reclaim", "confirmed_mss"]
+
+po3:
+  enabled: true
+  accumulation_session: "asia"
+  max_range_atr: 3.5
+  min_range_atr: 0.5
+  manipulation_window_bars: 24
+  distribution_window_bars: 24
+
+ict2022:
+  enabled: true
+  htf_required: true
+  max_sweep_to_reclaim_bars: 6
+  max_reclaim_to_displacement_bars: 8
+  max_displacement_to_mss_bars: 8
+  max_mss_to_fvg_bars: 2
+  max_entry_wait_bars: 48
+  entry_mode: "fvg_touch"
+  min_fvg_size_atr: 0.15
+  run_variants: true   # ablation runs: sweep_only ... full
+  weights:
+    htf_bias: 15
+    external_liquidity: 15
+    clean_sweep: 20
+    strong_displacement: 15
+    confirmed_mss: 15
+    fvg_quality: 10
+    session_context: 5
+    smt_confirmation: 5
+  required: ["htf_bias", "reclaim", "displacement", "confirmed_mss", "fvg"]
+
+turtle_soup:
+  enabled: true
+  allow_wick_only: false   # require close-through breakout (sweep != breakout)
+  max_reclaim_bars: 5
+  max_confirm_bars: 8
+
+smt:
+  enabled: false
+  primary: ""       # e.g. ES
+  secondary: ""     # e.g. NQ
+  timeframe: "15m"
+  max_swing_time_diff: "3h"
+  min_divergence_atr: 0.15
+
+outcome:
+  max_hold_bars: 96
+  default_target_r: 2.0
+  stop_first: true
